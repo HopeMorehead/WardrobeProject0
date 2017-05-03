@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WardrobeProject1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Accessory">
+    <Key>
+      <PropertyRef Name="AccessoriesID" />
+    </Key>
+    <Property Name="AccessoriesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Season" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Occasion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TopsID" Type="Int32" Nullable="false" />
+    <Property Name="BottomsID" Type="Int32" Nullable="false" />
+    <Property Name="ShoesID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Bottom" Relationship="Self.FK_Accessories_Bottoms" FromRole="Accessories" ToRole="Bottoms" />
+    <NavigationProperty Name="Sho" Relationship="Self.FK_Accessories_Shoes" FromRole="Accessories" ToRole="Shoes" />
+    <NavigationProperty Name="Top" Relationship="Self.FK_Accessories_Tops" FromRole="Accessories" ToRole="Tops" />
+  </EntityType>
+  <EntityType Name="Bottom">
+    <Key>
+      <PropertyRef Name="BottomsID" />
+    </Key>
+    <Property Name="BottomsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Season" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Occasion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Accessories" Relationship="Self.FK_Accessories_Bottoms" FromRole="Bottoms" ToRole="Accessories" />
+  </EntityType>
+  <EntityType Name="Sho">
+    <Key>
+      <PropertyRef Name="ShoesID" />
+    </Key>
+    <Property Name="ShoesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Season" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Occasion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Accessories" Relationship="Self.FK_Accessories_Shoes" FromRole="Shoes" ToRole="Accessories" />
+  </EntityType>
+  <EntityType Name="Top">
+    <Key>
+      <PropertyRef Name="TopsID" />
+    </Key>
+    <Property Name="TopsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Season" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="occasion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Accessories" Relationship="Self.FK_Accessories_Tops" FromRole="Tops" ToRole="Accessories" />
+  </EntityType>
+  <Association Name="FK_Accessories_Bottoms">
+    <End Role="Bottoms" Type="Self.Bottom" Multiplicity="1" />
+    <End Role="Accessories" Type="Self.Accessory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bottoms">
+        <PropertyRef Name="BottomsID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="BottomsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Accessories_Shoes">
+    <End Role="Shoes" Type="Self.Sho" Multiplicity="1" />
+    <End Role="Accessories" Type="Self.Accessory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shoes">
+        <PropertyRef Name="ShoesID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="ShoesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Accessories_Tops">
+    <End Role="Tops" Type="Self.Top" Multiplicity="1" />
+    <End Role="Accessories" Type="Self.Accessory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tops">
+        <PropertyRef Name="TopsID" />
+      </Principal>
+      <Dependent Role="Accessories">
+        <PropertyRef Name="TopsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WardrobeProject1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accessories" EntityType="Self.Accessory" />
+    <EntitySet Name="Bottoms" EntityType="Self.Bottom" />
+    <EntitySet Name="Shoes" EntityType="Self.Sho" />
+    <EntitySet Name="Tops" EntityType="Self.Top" />
+    <AssociationSet Name="FK_Accessories_Bottoms" Association="Self.FK_Accessories_Bottoms">
+      <End Role="Bottoms" EntitySet="Bottoms" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Accessories_Shoes" Association="Self.FK_Accessories_Shoes">
+      <End Role="Shoes" EntitySet="Shoes" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Accessories_Tops" Association="Self.FK_Accessories_Tops">
+      <End Role="Tops" EntitySet="Tops" />
+      <End Role="Accessories" EntitySet="Accessories" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
